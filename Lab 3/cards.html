@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #e3f2fd;
+      }
+      .artist-name {
+        font-weight: 600;
+        font-size: 3em;
+        padding-bottom: 10px;
+      }
+      .card {
+        padding: 10px;
+      }
+      .card-title {
+        font-weight: 600;
+        font-size: 1.5em;
+        padding-bottom: 10px;
+      }
+      .card-description {
+        font-weight: 400;
+        font-size: 2em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <template id="artist-template">
+      <div class="artist">
+        <div class="artist-name"></div>
+      </div>
+    </template>
+
+    <template id="card-template">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title"></div>
+          <div class="card-text"></div>
+        </div>
+      </div>
+    </template>
+
+    <div id="artist-list"></div>
+
+    <script src="cards.js"></script>
+  </body>
+</html>
