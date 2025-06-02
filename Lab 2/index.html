@@ -5,12 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lab 2 Calculator</title>
     <style>
-
+      h1 {
+        margin: 0;
+      }
+      #parent-container {
+        display: flex;
+        flex-direction: column;
+        height: 98vh;
+      }
+      #display-container {
+        display: flex;
+        height: 10%;
+        justify-content: center;
+        align-items: end;
+      }
+      #input-container {
+        display: flex;
+        height: 40%;
+        justify-content: center;
+        align-items: end;
+      }
+      #button-container {
+        display: flex;
+        flex-wrap: wrap;
+        height: 50%;
+        max-width: 800px;
+        margin: 0 33%;
+        justify-content: center;
+        align-items: top;
+      }
+      #button-container > * {
+        margin: 10px;
+      }
+      .operator {
+        height: 50px;
+        width: 50px;
+      }
+      .functional {
+        height: 50px;
+        width: 150px;
+      }
     </style>
   </head>
 
   <body>
-    <button id="foo" type="button">BUTTTTTTTTON</button>
+    <div id="parent-container">
+      <div id="display-container"></div>
+
+      <div id="input-container">
+        <textarea rows="1" style="resize: none" name="" id=""></textarea>
+      </div>
+
+      <div id="button-container">
+        <button id="plus" class="operator" type="button"><h1>+</h1></button>
+        <button id="minus" class="operator" type="button"><h1>−</h1></button>
+        <button id="times" class="operator" type="button"><h1>×</h1></button>
+        <button id="divide" class="operator" type="button"><h1>÷</h1></button>
+        <button id="calculate" class="functional" type="button">
+          <h1>Calculate</h1>
+        </button>
+        <button id="reset" class="functional" type="button">
+          <h1>Reset</h1>
+        </button>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>

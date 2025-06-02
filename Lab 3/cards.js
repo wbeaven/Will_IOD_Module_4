@@ -11,61 +11,93 @@
 // Exercise 3 - the artist’s portfolio:
 // Populate the page dynamically, by generating an artist
 // profile card which includes cards representing the
-// items in an artist's portfolio. Extension: make an array
+// items in an artist's portfolio.
+
+// Extension: make an array
 // of artists, all with multiple portfolio items.
 
-
 function addArtist(name, position) {
-    const template = document
+  const template = document
     .getElementById("artist-template")
     .content.cloneNode(true);
-    
-    template.querySelector(".artist-name").innerText = name;
-    let newDiv = document.createElement("div");
-    newDiv.setAttribute("id", position);
-    template.querySelector(".artist").appendChild(newDiv);
-    document.getElementById("artist-list").appendChild(template);
+
+  template.querySelector(".artist-name").innerText = name;
+  let newDiv = document.createElement("div");
+  newDiv.setAttribute("id", position);
+  template.querySelector(".artist").appendChild(newDiv);
+  document.getElementById("artist-list").appendChild(template);
 }
 
 function addCard(title, body, id) {
-    const template = document
+  const template = document
     .getElementById("card-template")
     .content.cloneNode(true);
 
-    template.querySelector(".card-title").innerText = title;
-    template.querySelector(".card-text").innerText = body;
-    document.getElementById(id).appendChild(template);
+  template.querySelector(".card-title").innerText = title;
+  template.querySelector(".card-text").innerText = body;
+  document.getElementById(id).appendChild(template);
 }
 
-const jeanP = {
+const data = [
+  {
     name: "Jean Picard",
     art: [
-        ["Art Piece 1", "Description"],
-        ["Art Piece 2", "Description"],
-        ["Art Piece 3", "Description"],
+      {
+        artPiece: "Art Piece 1",
+        description: "Description",
+      },
+      {
+        artPiece: "Art Piece 2",
+        description: "Description",
+      },
+      {
+        artPiece: "Art Piece 3",
+        description: "Description",
+      },
     ],
-};
-const luisF = {
+  },
+  {
     name: "Luis Francois",
     art: [
-        ["Art Piece 1", "Description"],
-        ["Art Piece 2", "Description"],
-        ["Art Piece 3", "Description"],
+      {
+        artPiece: "Art Piece 1",
+        description: "Description",
+      },
+      {
+        artPiece: "Art Piece 2",
+        description: "Description",
+      },
+      {
+        artPiece: "Art Piece 3",
+        description: "Description",
+      },
+      {
+        artPiece: "Art Piece 4",
+        description: "Description",
+      },
     ],
-};
-const reneeD = {
+  },
+  {
     name: "Renee Dubeux",
     art: [
-        ["Art Piece 1", "Description"],
-        ["Art Piece 2", "Description"],
-        ["Art Piece 3", "Description"],
+      {
+        artPiece: "Art Piece 1",
+        description: "Description",
+      },
+      {
+        artPiece: "Art Piece 2",
+        description: "Description",
+      },
+      {
+        artPiece: "Art Piece 3",
+        description: "Description",
+      },
     ],
-};
-const artistArray = [jeanP, luisF, reneeD];
-
-for (let i = 0; i < artistArray.length; i++) {
-  addArtist(artistArray[i].name, i);
-  artistArray[i].art.forEach((element) => {
-    addCard(element[0], element[1], i);
+  },
+];
+for (let i = 0; i < data.length; i++) {
+  addArtist(data[i].name, i);
+  data[i].art.forEach((element) => {
+    addCard(Object.values(element)[0], Object.values(element)[1], i);
   });
 }
