@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Luxon Date Calculations</title>
+        <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                padding: 30px;
+                max-width: 600px;
+                margin: auto;
+                background: #f9f9f9;
+                color: #333;
+            }
+            h1 {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            .result {
+                background: white;
+                padding: 15px 20px;
+                margin-bottom: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+            }
+            label {
+                font-weight: bold;
+                display: block;
+                margin-bottom: 5px;
+            }
+            input {
+                padding: 8px;
+                width: 100%;
+                margin-bottom: 15px;
+                box-sizing: border-box;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                font-size: 1rem;
+            }
+            button {
+                padding: 10px 15px;
+                font-size: 1rem;
+                border: none;
+                border-radius: 5px;
+                background: #007bff;
+                color: white;
+                cursor: pointer;
+            }
+            button:hover {
+                background: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Luxon Date Calculations</h1>
+
+        <div>
+            <label for="birthdate">Enter your birthdate:</label>
+            <input type="date" id="birthdate" value="1999-11-15" />
+        </div>
+
+        <div>
+            <label for="dateA">Enter date A:</label>
+            <input type="date" id="dateA" value="2024-01-10" />
+        </div>
+
+        <div>
+            <label for="dateB">Enter date B:</label>
+            <input type="date" id="dateB" value="2023-12-25" />
+        </div>
+
+        <button id="calculateBtn">Calculate</button>
+
+        <div class="result" id="resultDays"></div>
+        <div class="result" id="resultYMD"></div>
+        <div class="result" id="resultClosest"></div>
+        <div class="result" id="resultCompare"></div>
+        <div class="result" id="resultLondon"></div>
+
+        <script>
+            const { DateTime } = luxon;
+
+            function calculate() {
+                const birthInput = document.getElementById("birthdate").value;
+                const dateAInput = document.getElementById("dateA").value;
+                const dateBInput = document.getElementById("dateB").value;
+
+                const birthDate = DateTime.fromISO(birthInput);
+                const now = DateTime.now();
+
+                // 1. Days between birthdate and now
+                const daysBetween = Math.floor(now.diff(birthDate, "days").days);
+                document.getElementById(
+                    "resultDays"
+                ).textContent = `1. Days between birthdate and now: ${daysBetween} days`;
+
+                // 2. Years, months, days between birthdate and now
+                const diffObj = now.diff(birthDate, ["years", "months", "days"]).toObject();
+                document.getElementById("resultYMD").textContent = `2. ${Math.floor(
+                    diffObj.years
+                )} years, ${Math.floor(diffObj.months)} months, and ${Math.floor(
+                    diffObj.days
+                )} days`;
+
+                // 3. Closest date to now
+                const dateA = DateTime.fromISO(dateAInput);
+                const dateB = DateTime.fromISO(dateBInput);
+
+                const diffA = Math.abs(now.diff(dateA).milliseconds);
+                const diffB = Math.abs(now.diff(dateB).milliseconds);
+                const closestDate = diffA < diffB ? dateA : dateB;
+                document.getElementById(
+                    "resultClosest"
+                ).textContent = `3. Closest date to now is: ${closestDate.toLocaleString(
+                    DateTime.DATE_MED
+                )}`;
+
+                // 4. Compare dates
+                let compareText;
+                if (dateA < dateB)
+                    compareText = `${dateA.toLocaleString(
+                        DateTime.DATE_MED
+                    )} is before ${dateB.toLocaleString(DateTime.DATE_MED)}`;
+                else if (dateA > dateB)
+                    compareText = `${dateA.toLocaleString(
+                        DateTime.DATE_MED
+                    )} is after ${dateB.toLocaleString(DateTime.DATE_MED)}`;
+                else
+                    compareText = `${dateA.toLocaleString(
+                        DateTime.DATE_MED
+                    )} is the same as ${dateB.toLocaleString(DateTime.DATE_MED)}`;
+                document.getElementById("resultCompare").textContent = `4. ${compareText}`;
+
+                // 5. Current time in London
+                const londonTime = DateTime.now().setZone("Europe/London");
+                document.getElementById(
+                    "resultLondon"
+                ).textContent = `5. Current time in London: ${londonTime.toLocaleString(
+                    DateTime.TIME_WITH_SECONDS
+                )}`;
+            }
+
+            calculate();
+
+            document.getElementById("calculateBtn").addEventListener("click", calculate);
+        </script>
+    </body>
+</html>

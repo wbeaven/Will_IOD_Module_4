@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>eCharts - Fake Store Categories</title>
+        <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js"></script>
+    </head>
+    <body>
+        <div id="main" style="width: 900px; height: 600px"></div>
+
+        <script type="text/javascript">
+            let myChart = echarts.init(document.getElementById("main"));
+
+            fetch("https://fakestoreapi.com/products")
+                .then((response) => response.json())
+                .then((products) => {
+                    const categoryCounts = {};
+
+                    products.forEach((product) => {
+                        const category = product.category;
+                        categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+                    });
+
+                    const categories = Object.keys(categoryCounts);
+                    const counts = categories.map((cat) => categoryCounts[cat]);
+
+                    let options = {
+                        title: { text: "Fake Store Categories" },
+                        tooltip: {},
+                        xAxis: {
+                            type: "category",
+                            data: categories,
+                            axisLabel: { rotate: 30, interval: 0 },
+                        },
+                        yAxis: {
+                            type: "value",
+                            name: "Number of Products",
+                        },
+                        series: [
+                            {
+                                name: "# products",
+                                type: "bar",
+                                data: counts,
+                                itemStyle: {
+                                    color: "#5470C6",
+                                },
+                            },
+                        ],
+                    };
+
+                    myChart.setOption(options);
+                })
+                .catch((err) => {
+                    console.error("Error fetching products:", err);
+                    myChart.showLoading({ text: "Failed to load data" });
+                });
+        </script>
+    </body>
+</html>

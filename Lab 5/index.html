@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Dynamic News Feed</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                padding: 30px;
+                background-color: #f1f1f1;
+            }
+
+            h1 {
+                margin-bottom: 20px;
+            }
+
+            .news-form {
+                margin-bottom: 30px;
+                background-color: #ffffff;
+                padding: 15px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .news-form input,
+            .news-form textarea,
+            .news-form button {
+                display: block;
+                width: 100%;
+                margin-top: 10px;
+                font-size: 1em;
+                padding: 10px;
+            }
+
+            .news-item {
+                background: white;
+                padding: 15px;
+                margin-bottom: 15px;
+                border-radius: 8px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .news-title {
+                font-weight: bold;
+                font-size: 1.2em;
+                margin-bottom: 5px;
+            }
+
+            .news-content {
+                color: #333;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Latest News</h1>
+
+        <div class="news-form">
+            <form id="newsForm">
+                <label for="title">Title:</label>
+                <input type="text" id="title" required />
+
+                <label for="content">Content:</label>
+                <textarea id="content" rows="4" required></textarea>
+
+                <button type="submit">Add News</button>
+            </form>
+        </div>
+
+        <div id="news-container"></div>
+
+        <script>
+            let news = [
+                { id: 1, title: "Election Results", content: "Newly elected minister..." },
+                { id: 2, title: "Sporting Success", content: "World Cup winners..." },
+                { id: 3, title: "Tornado Warning", content: "Residents should prepare..." },
+            ];
+
+            const container = document.getElementById("news-container");
+            const form = document.getElementById("newsForm");
+
+            let initialRendered = false;
+
+            function renderNews() {
+                container.innerHTML = "";
+
+                let itemsToRender = news;
+
+                if (initialRendered) {
+                    itemsToRender = news.slice(3);
+                }
+
+                itemsToRender.forEach((item) => {
+                    const div = document.createElement("div");
+                    div.className = "news-item";
+                    div.innerHTML = `
+                    <div class="news-title">${item.title}</div>
+                    <div class="news-content">${item.content}</div>
+                    `;
+                    container.appendChild(div);
+                });
+
+                initialRendered = true;
+            }
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                const titleInput = document.getElementById("title");
+                const contentInput = document.getElementById("content");
+
+                const title = titleInput.value.trim();
+                const content = contentInput.value.trim();
+
+                if (title && content) {
+                    news.push({
+                        id: Date.now(),
+                        title: title,
+                        content: content,
+                    });
+
+                    titleInput.value = "";
+                    contentInput.value = "";
+                }
+            });
+
+            renderNews();
+            setInterval(renderNews, 5000);
+        </script>
+    </body>
+</html>

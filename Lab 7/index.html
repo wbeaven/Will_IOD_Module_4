@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Vertical Slider</title>
+        <style>
+            body {
+                height: 100vh;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                background-color: #f0f0f0;
+                overflow: hidden;
+            }
+
+            .slider-container {
+                position: relative;
+                height: 80vh;
+                width: 100px;
+                background-color: #ddd;
+            }
+
+            .slider {
+                width: 100px;
+                height: 100px;
+                background-color: red;
+                position: absolute;
+                top: 0;
+                left: 0;
+                animation: slideDownUp 3s infinite ease-in-out;
+            }
+
+            @keyframes slideDownUp {
+                0% {
+                    top: 0;
+                    background-color: red;
+                }
+                50% {
+                    top: calc(100% - 100px); /* slide to bottom */
+                    background-color: blue;
+                }
+                100% {
+                    top: 0;
+                    background-color: green;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="slider-container">
+            <div class="slider"></div>
+        </div>
+    </body>
+</html>
